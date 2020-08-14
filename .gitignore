@@ -1,0 +1,14 @@
+
+*.bin
+
+code/.idea/
+
+code/lib/__pycache__/
+
+servers.txt
+
+code/lib/dhcpserv/hosts.csv
+
+code/inventories/
+
+code/output/
