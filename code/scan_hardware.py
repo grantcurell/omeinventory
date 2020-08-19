@@ -106,11 +106,8 @@ def _run_inventory():
         headers['X-Auth-Token'] = session_info.headers['X-Auth-Token']
 
         try:
-            # TODO - update this for production
-            # power_control_servers(servers["id_list"], headers, power_off_non_graceful=True)
-            # power_control_servers(servers["id_list"], headers, power_on=True)
-            power_control_servers(["13136"], headers, args.omeip, power_off_non_graceful=True)
-            power_control_servers(["13136"], headers, args.omeip, power_on=True)
+            power_control_servers(servers["id_list"], headers, power_off_non_graceful=True)
+            power_control_servers(servers["id_list"], headers, power_on=True)
         except requests.exceptions.ConnectionError:
             logging.error("Failed to connect to OME. Are you sure this host has good connectivity to the OME "
                           "server at " + args.omeip + "?")
@@ -994,9 +991,7 @@ if __name__ == "__main__":
         logging.info("Finished initial scan.")
         if not args.skip:
             logging.info("Shutting down servers.")
-            # TODO - update this for production
-            # power_control_servers(servers["id_list"], headers, power_off_non_graceful=True)
-            power_control_servers(["13136"], headers, args.omeip, power_off_non_graceful=True)
+            power_control_servers(servers["id_list"], headers, power_off_non_graceful=True)
 
     elif args.scan == "final":
 

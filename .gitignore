@@ -12,3 +12,5 @@ code/lib/dhcpserv/hosts.csv
 code/inventories/
 
 code/output/
+
+.idea/
