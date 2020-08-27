@@ -193,7 +193,8 @@ def track_job_to_completion(ip_address, headers, job_id, sleep_interval=30):
             elif int(job_status) in failed_job_status:
                 job_incomplete = False
                 if job_status_str == "Warning":
-                    logging.warning("Completed with errors")
+                    logging.warning("Discovery job completed with errors. This frequently means one of the servers "
+                                    "wasn't available during discovery.")
                 else:
                     logging.error("Job failed ... ")
                 job_hist_url = str(job_url) + "/ExecutionHistories"

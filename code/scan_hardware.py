@@ -106,8 +106,8 @@ def _run_inventory():
         headers['X-Auth-Token'] = session_info.headers['X-Auth-Token']
 
         try:
-            power_control_servers(servers["id_list"], headers, power_off_non_graceful=True)
-            power_control_servers(servers["id_list"], headers, power_on=True)
+            power_control_servers(servers["id_list"], headers, args.omeip, power_off_non_graceful=True)
+            power_control_servers(servers["id_list"], headers, args.omeip, power_on=True)
         except requests.exceptions.ConnectionError:
             logging.error("Failed to connect to OME. Are you sure this host has good connectivity to the OME "
                           "server at " + args.omeip + "?")
@@ -212,7 +212,19 @@ def discover(target_ips: list, ome_ip: str, ome_username: str, ome_password: str
     servers["id_list"] = []
     servers["id_to_ip"] = {}
 
+    temp_target_ips = []
+
     for ip_address in target_ips:
+        if ip_address in device_ids_by_idrac:
+            temp_target_ips.append(ip_address)
+            logging.info("Successfully discovered " + ip_address)
+        else:
+            logging.debug(ip_address + " was not available. Skipping.")
+
+    target_ips = temp_target_ips
+
+    for ip_address in target_ips:
+
         server_id = str(device_ids_by_idrac[ip_address])
         if server_id != "":
             servers[ip_address] = server_id
@@ -252,7 +264,7 @@ def discover(target_ips: list, ome_ip: str, ome_username: str, ome_password: str
     lib.ome.add_device_to_static_group(ome_ip, ome_username, ome_password, servers["GROUP_NAME"],
                                        device_names=target_ips)
 
-    logging.info("Successfully discovered all servers. Check the group " + servers["GROUP_NAME"] + " for a list.")
+    logging.info("Successfully discovered servers. Check the group " + servers["GROUP_NAME"] + " for a list.")
     return servers
 
 
@@ -991,7 +1003,7 @@ if __name__ == "__main__":
         logging.info("Finished initial scan.")
         if not args.skip:
             logging.info("Shutting down servers.")
-            power_control_servers(servers["id_list"], headers, power_off_non_graceful=True)
+            power_control_servers(servers["id_list"], headers, args.omeip, power_off_non_graceful=True)
 
     elif args.scan == "final":
 
