@@ -592,26 +592,6 @@ def compare_inventories(device_inventory_1: dict, device_inventory_2: dict,
     if not xldatabase:
         xldatabase = xl.Database()
 
-    """
-    device_inventory_2["13128"]["PCI Cards"][1]["Manufacturer"] = "New Manufacturer"
-    device_inventory_2["13128"]["PCI Cards"][1]["Slot Number"] = "AHCI.Slot.2-2"
-    device_inventory_2["13128"]["PCI Cards"][1]["Databus Width"] = "8x or x 8"
-    device_inventory_2["13128"]["PCI Cards"][2]["Manufacturer"] = "New Manufacturer"
-    device_inventory_2["13128"]["PCI Cards"][2]["Slot Number"] = "AHCI.Slot.2-2"
-    device_inventory_2["13128"]["PCI Cards"][2]["Databus Width"] = "8x or x 8"
-    device_inventory_2["13136"]["Processors"].pop(2)
-    device_inventory_2["13136"]["Power Supplies"][2] = {"ID": 984, "Location": "PSU.Slot.3", "Output Watts": 9000,
-                                                        "Firmware Version": "00.3D.67",
-                                                        "Model": 'PWR SPLY,1600W,RDNT,DELTA', "Serial Number": "Stuff"}
-    """
-    device_inventory_2["13136"]["Power Supplies"][2] = {"ID": 984, "Location": "PSU.Slot.3", "Output Watts": 9000,
-                                                        "Firmware Version": "00.3D.67",
-                                                        "Model": 'PWR SPLY,1600W,RDNT,DELTA', "Serial Number": "Stuff"}
-    device_inventory_2["13136"]["Memory"][24] = {"ID": 8556, "Name": "DIMM.Socket.Q1", "Size": 8192, "Manufacturer":
-                                                "Hynix Semiconductor", "Part Number": "HMA81GR7CJR8N-VK", "Serial Number":
-                                                "GRANT", "Speed": 2666, "Current Operating Speed": 2666,
-                                                "Device Description": "DIMM Q1"}
-
     xldatabase.add_ws("Inventory Deltas",
                       {'A1': {'v': "Service Tag", 'f': '', 's': ''},
                        'B1': {'v': "System idrac IP", 'f': '', 's': ''},
